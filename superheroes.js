@@ -498,9 +498,50 @@ const superheroes = [
   },
 ];
 
-alert(
-  "1. Checking if JS file is linked up correctly. \n2. Always open the inspector/console when woorking with the JS \n3. Write your code in the end of the js-file \n4. Don't use alert boxes for UI... \n5. Delete this message or comment it out"
-);
+// alert(
+//   "1. Checking if JS file is linked up correctly. \n2. Always open the inspector/console when woorking with the JS \n3. Write your code in the end of the js-file \n4. Don't use alert boxes for UI... \n5. Delete this message or comment it out"
+// );
 console.table(superheroes);
 
 /* write your code here */
+
+//My Array calls "superheroes"
+//I do something forEach of one of them and call a function named "showHeroFunction".
+superheroes.forEach(showHeroFunction);
+
+//Then I write what that function does.
+//The argument (hero) indicates that it will receive one object at a time.
+//First we select the content of the template. We create a variable and select the template in DOM by its ID and then its content.
+//Then we create a copy (we clone it with cloneNode(true)): we create a variable called "clone" wand say to that "template" selected clone!.
+function showHeroFunction(hero) {
+  const template = document.querySelector("template").content;
+  const clone = template.cloneNode(true);
+
+  //Now is time to **** Populate *******
+  //I replacing some parts of the clone e.g. the name (h2) in the DOM
+  //First I select h2 in the clone and replace its textContent
+  //That textContent is equal to superheroes(dot)name because superheroes is the name of variable that define the array.
+  clone.querySelector(
+    "h2"
+  ).textContent = `${hero.name} - ${hero.lifePercentage}%`;
+  clone.querySelector("h3").textContent = hero.primaryNemesis;
+  clone.querySelector("img").src = hero.img;
+  // clone.querySelector("li").textContent = hero.powers;
+
+  //I have comment the line above because there is no li anymore in the DOM
+  //Now the function is inline
+  //with the console.log I am calling the argument power
+  //then I saying the variable "li" create a li
+  //That li has a textContent "power" previously defined as the argument of the function inline
+  //then I cloned that "li" inside the "ul"
+  hero.powers.forEach(function (power) {
+    console.log(power);
+    const li = document.createElement("li");
+    li.textContent = power;
+    clone.querySelector("ul").appendChild(li);
+  });
+
+  //We want to start to see something in the UI . So what I do bellow is to select the parent "main" where we want to put our heroes.
+  //Then we Append / Add our clone template there
+  document.querySelector("main").appendChild(clone);
+}
